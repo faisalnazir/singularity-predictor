@@ -1,4 +1,4 @@
-import { createSignal } from 'solid-js';
+import { createSignal, Show } from 'solid-js';
 
 /**
  * Share Button Component
@@ -6,6 +6,8 @@ import { createSignal } from 'solid-js';
  */
 export default function ShareButton(props) {
   const [showMenu, setShowMenu] = createSignal(false);
+  const [showLinkedInPreview, setShowLinkedInPreview] = createSignal(false);
+  const [copied, setCopied] = createSignal(false);
 
   // UPDATE THESE WITH YOUR ACTUAL SOCIAL MEDIA HANDLES
   const SOCIAL_HANDLES = {
@@ -33,7 +35,19 @@ export default function ShareButton(props) {
     const singularityYear = Math.round(asiYear + 3);
     const scenario = props.scenario;
 
-    return `My AI Timeline Prediction:\n\n🤖 AGI: ${Math.round(agiYear)}\n⭐ ASI/Superintelligence: ${Math.round(asiYear)}\n🌀 Singularity: ${Math.round(singularityYear)}\n\nScenario: ${scenario}\n\nPredict your own timeline 👇\n\n#AI #AGI #ASI #ArtificialIntelligence #Future`;
+    return `My AI Timeline Prediction:
+
+🤖 AGI: ${Math.round(agiYear)}
+⭐ ASI/Superintelligence: ${Math.round(asiYear)}
+🌀 Singularity: ${Math.round(singularityYear)}
+
+Scenario: ${scenario}
+
+Predict your own timeline 👇
+
+#AI #AGI #ASI #ArtificialIntelligence #Future
+
+CC: @${SOCIAL_HANDLES.linkedin}`;
   };
 
   /**
@@ -47,26 +61,42 @@ export default function ShareButton(props) {
   };
 
   /**
-   * Share to LinkedIn - copies text to clipboard and opens LinkedIn share
+   * Show LinkedIn preview modal
    */
-  const shareToLinkedIn = async () => {
-    const shareUrl = window.location.href;
-    const shareText = generateLinkedInText();
+  const openLinkedInPreview = () => {
+    setShowMenu(false);
+    setShowLinkedInPreview(true);
+    setCopied(false);
+  };
 
-    // Copy the share text to clipboard first
+  /**
+   * Copy LinkedIn text to clipboard
+   */
+  const copyLinkedInText = async () => {
+    const shareText = generateLinkedInText();
     try {
       await navigator.clipboard.writeText(shareText);
+      setCopied(true);
     } catch (err) {
       console.error('Failed to copy text:', err);
+      // Fallback: select the textarea content
+      const textarea = document.querySelector('.linkedin-preview-text');
+      if (textarea) {
+        textarea.select();
+        document.execCommand('copy');
+        setCopied(true);
+      }
     }
+  };
 
-    // Open LinkedIn share dialog
+  /**
+   * Open LinkedIn share after copying
+   */
+  const openLinkedIn = () => {
+    const shareUrl = window.location.href;
     const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`;
     window.open(url, '_blank', 'width=600,height=600');
-
-    // Show a brief alert to let user know text is copied
-    alert('Your prediction text has been copied! Paste it into your LinkedIn post.');
-    setShowMenu(false);
+    setShowLinkedInPreview(false);
   };
 
   /**
@@ -75,7 +105,6 @@ export default function ShareButton(props) {
   const copyLink = async () => {
     try {
       await navigator.clipboard.writeText(window.location.href);
-      // Could add a toast notification here
       alert('Link copied to clipboard!');
       setShowMenu(false);
     } catch (err) {
@@ -116,7 +145,7 @@ export default function ShareButton(props) {
             </div>
           </button>
 
-          <button class="share-option" onClick={shareToLinkedIn}>
+          <button class="share-option" onClick={openLinkedInPreview}>
             <div class="share-option-icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
@@ -124,7 +153,7 @@ export default function ShareButton(props) {
             </div>
             <div class="share-option-content">
               <div class="share-option-title">Share to LinkedIn</div>
-              <div class="share-option-desc">Tag {SOCIAL_HANDLES.linkedin}</div>
+              <div class="share-option-desc">Copy text & share</div>
             </div>
           </button>
 
@@ -147,6 +176,40 @@ export default function ShareButton(props) {
 
       <Show when={showMenu()}>
         <div class="share-backdrop" onClick={() => setShowMenu(false)}></div>
+      </Show>
+
+      {/* LinkedIn Preview Modal */}
+      <Show when={showLinkedInPreview()}>
+        <div class="linkedin-preview-overlay">
+          <div class="linkedin-preview-modal">
+            <div class="linkedin-preview-header">
+              <h3>📋 Copy your prediction for LinkedIn</h3>
+              <button class="close-btn" onClick={() => setShowLinkedInPreview(false)}>×</button>
+            </div>
+            <div class="linkedin-preview-body">
+              <p class="linkedin-preview-instructions">
+                LinkedIn doesn't allow pre-filled text. Copy the text below, then paste it into your LinkedIn post:
+              </p>
+              <textarea
+                class="linkedin-preview-text"
+                readonly
+                value={generateLinkedInText()}
+                onClick={(e) => e.target.select()}
+              />
+              <div class="linkedin-preview-actions">
+                <button
+                  class={`copy-text-btn ${copied() ? 'copied' : ''}`}
+                  onClick={copyLinkedInText}
+                >
+                  {copied() ? '✓ Copied!' : '📋 Copy Text'}
+                </button>
+                <button class="open-linkedin-btn" onClick={openLinkedIn}>
+                  Open LinkedIn →
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </Show>
     </div>
   );
