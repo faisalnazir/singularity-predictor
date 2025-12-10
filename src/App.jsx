@@ -645,47 +645,57 @@ function App() {
         </div>
       </div>
 
-      {/* D3 Graph */}
-      <div class="graph-fullscreen">
-        <svg ref={svgRef}></svg>
-      </div>
-
-      {/* Lever Panel - Now Underneath Graph */}
-      <div class="lever-panel">
-        <div class="lever-categories-grid">
-          <For each={Object.entries(leversByCategory())}>
-            {([categoryId, categoryLevers]) => (
-              <div class="lever-category">
-                <div class="category-header" style={{ color: LEVER_CATEGORIES[categoryId].color }}>
-                  <span class="category-icon">{LEVER_CATEGORIES[categoryId].icon}</span>
-                  <span class="category-label">{LEVER_CATEGORIES[categoryId].label}</span>
-                </div>
-                <For each={categoryLevers}>
-                  {(lever) => (
-                    <div class="lever">
-                      <div class="lever-header">
-                        <span class="lever-label">{lever.label}</span>
-                        <span class={`lever-value ${getLeverValueClass(levers()[lever.id])}`}>
-                          {formatLeverValue(levers()[lever.id])}
-                        </span>
-                      </div>
-                      <input
-                        type="range"
-                        class="lever-slider"
-                        min={lever.min}
-                        max={lever.max}
-                        step="1"
-                        value={levers()[lever.id]}
-                        onInput={(e) => updateLever(lever.id, e.target.value)}
-                      />
-                    </div>
-                  )}
-                </For>
-              </div>
-            )}
-          </For>
+      {/* Main Two-Column Layout - Graph Left, Parameters Right */}
+      <div class="main-two-column">
+        {/* Left Column - Graph */}
+        <div class="graph-column">
+          <div class="graph-fullscreen">
+            <svg ref={svgRef}></svg>
+          </div>
         </div>
-        <button class="reset-btn" onClick={resetLevers}>↺ Reset</button>
+
+        {/* Right Column - Parameters Panel */}
+        <div class="params-column">
+          <div class="params-panel">
+            <div class="params-panel-header">
+              <span class="params-title">⚙️ Parameters</span>
+              <button class="reset-btn-small" onClick={resetLevers}>↺ Reset</button>
+            </div>
+            <div class="params-categories">
+              <For each={Object.entries(leversByCategory())}>
+                {([categoryId, categoryLevers]) => (
+                  <div class="param-category-card">
+                    <div class="category-header" style={{ color: LEVER_CATEGORIES[categoryId].color }}>
+                      <span class="category-icon">{LEVER_CATEGORIES[categoryId].icon}</span>
+                      <span class="category-label">{LEVER_CATEGORIES[categoryId].label}</span>
+                    </div>
+                    <For each={categoryLevers}>
+                      {(lever) => (
+                        <div class="lever">
+                          <div class="lever-header">
+                            <span class="lever-label">{lever.label}</span>
+                            <span class={`lever-value ${getLeverValueClass(levers()[lever.id])}`}>
+                              {formatLeverValue(levers()[lever.id])}
+                            </span>
+                          </div>
+                          <input
+                            type="range"
+                            class="lever-slider"
+                            min={lever.min}
+                            max={lever.max}
+                            step="1"
+                            value={levers()[lever.id]}
+                            onInput={(e) => updateLever(lever.id, e.target.value)}
+                          />
+                        </div>
+                      )}
+                    </For>
+                  </div>
+                )}
+              </For>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Scenarios Panel - Left Side */}

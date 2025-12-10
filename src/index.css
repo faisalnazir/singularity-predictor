@@ -431,15 +431,28 @@ body {
   overflow: hidden;
 }
 
-/* Full screen graph background */
-.graph-fullscreen {
+/* Main Two-Column Layout - Graph Left, Parameters Right */
+.main-two-column {
   position: absolute;
-  top: 160px;
+  top: 130px;
   left: 0;
   right: 0;
-  bottom: 200px;
-  /* Reduced - lever panel underneath */
+  bottom: 0;
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 0;
   z-index: 1;
+}
+
+/* Left Column - Graph */
+.graph-column {
+  position: relative;
+  overflow: hidden;
+}
+
+.graph-fullscreen {
+  position: absolute;
+  inset: 0;
   overflow: hidden;
 }
 
@@ -447,7 +460,63 @@ body {
   width: 100%;
   height: 100%;
   filter: drop-shadow(0 0 50px rgba(0, 240, 255, 0.05));
-  /* Subtle graph glow */
+}
+
+/* Right Column - Parameters */
+.params-column {
+  background: rgba(5, 5, 10, 0.95);
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  overflow-y: auto;
+  z-index: 10;
+}
+
+.params-panel {
+  padding: var(--space-4);
+}
+
+.params-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.params-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.reset-btn-small {
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  font-family: var(--font-family);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.reset-btn-small:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-text-primary);
+}
+
+.params-categories {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.param-category-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
 }
 
 /* ============================================
@@ -815,17 +884,11 @@ body {
 }
 
 /* ============================================
-   LEVER PANEL (Compact Full-Width Bottom Bar)
+   LEVER PANEL (Now moved to right column - hide old styles)
    ============================================ */
 .lever-panel {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 50;
-  background: linear-gradient(to top, rgba(5, 5, 8, 0.98) 0%, rgba(5, 5, 8, 0.9) 90%, transparent 100%);
-  padding: var(--space-3) var(--space-4);
-  padding-top: var(--space-4);
+  display: none;
+  /* Hidden - using params-column layout now */
 }
 
 /* Full-width horizontal grid for all 4 categories */
