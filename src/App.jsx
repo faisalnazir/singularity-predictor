@@ -716,7 +716,7 @@ function App() {
 
 
 
-      {/* Learn Overlay - Mosaic Card Grid */}
+      {/* Learn Overlay - Two Column Layout */}
       <Show when={showLearn()}>
         <div class="learn-overlay">
           <div class="learn-header">
@@ -726,26 +726,41 @@ function App() {
             </div>
             <button class="close-btn" onClick={() => setShowLearn(false)}>×</button>
           </div>
-          <div class="learn-mosaic">
-            <For each={INFO_TABS}>
-              {(tab) => (
-                <div class={`mosaic-card ${tab.id}`}>
-                  <div class="mosaic-card-header">
-                    <span class="mosaic-card-label">{tab.label}</span>
+          <div class="learn-two-column">
+            {/* Left Column - Concept Cards */}
+            <div class="learn-main-column">
+              <For each={INFO_TABS.filter(tab => tab.id !== 'parameters')}>
+                {(tab) => (
+                  <div class={`mosaic-card ${tab.id}`}>
+                    <div class="mosaic-card-header">
+                      <span class="mosaic-card-label">{tab.label}</span>
+                    </div>
+                    <h3 class="mosaic-card-title">{tab.content.title}</h3>
+                    <For each={tab.content.paragraphs}>{(p) => <p class="mosaic-card-desc">{p}</p>}</For>
+
+                    {/* Regular bullets */}
+                    <Show when={tab.content.bullets}>
+                      <ul class="mosaic-bullets">
+                        <For each={tab.content.bullets}>{(bullet) => <li>{bullet}</li>}</For>
+                      </ul>
+                    </Show>
                   </div>
-                  <h3 class="mosaic-card-title">{tab.content.title}</h3>
-                  <For each={tab.content.paragraphs}>{(p) => <p class="mosaic-card-desc">{p}</p>}</For>
+                )}
+              </For>
+            </div>
 
-                  {/* Regular bullets */}
-                  <Show when={tab.content.bullets}>
-                    <ul class="mosaic-bullets">
-                      <For each={tab.content.bullets}>{(bullet) => <li>{bullet}</li>}</For>
-                    </ul>
-                  </Show>
+            {/* Right Column - Parameters */}
+            <div class="learn-params-column">
+              <For each={INFO_TABS.filter(tab => tab.id === 'parameters')}>
+                {(tab) => (
+                  <div class="params-sidebar">
+                    <div class="params-sidebar-header">
+                      <span class="mosaic-card-label">{tab.label}</span>
+                    </div>
+                    <h3 class="params-sidebar-title">{tab.content.title}</h3>
+                    <For each={tab.content.paragraphs}>{(p) => <p class="params-sidebar-desc">{p}</p>}</For>
 
-                  {/* Parameters categories */}
-                  <Show when={tab.content.categories}>
-                    <div class="mosaic-params">
+                    <div class="params-sidebar-grid">
                       <For each={tab.content.categories}>
                         {(cat) => (
                           <div class="mosaic-param-group" style={{ 'border-left-color': cat.color }}>
@@ -763,10 +778,10 @@ function App() {
                         )}
                       </For>
                     </div>
-                  </Show>
-                </div>
-              )}
-            </For>
+                  </div>
+                )}
+              </For>
+            </div>
           </div>
         </div>
       </Show>

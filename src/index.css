@@ -1988,7 +1988,66 @@ body {
   flex-shrink: 0;
 }
 
-/* Mosaic Grid Layout */
+/* Two Column Layout */
+.learn-two-column {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-6);
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: var(--space-6);
+}
+
+/* Left Column - Concept Cards */
+.learn-main-column {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-4);
+  align-content: start;
+}
+
+/* Right Column - Parameters Sidebar */
+.learn-params-column {
+  position: sticky;
+  top: 0;
+  height: fit-content;
+  max-height: calc(100vh - 180px);
+  overflow-y: auto;
+}
+
+.params-sidebar {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: 3px solid #06b6d4;
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+}
+
+.params-sidebar-header {
+  margin-bottom: var(--space-3);
+}
+
+.params-sidebar-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: var(--space-3);
+  color: var(--color-text-primary);
+}
+
+.params-sidebar-desc {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--space-4);
+}
+
+.params-sidebar-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* Legacy mosaic styles kept */
 .learn-mosaic {
   flex: 1;
   overflow-y: auto;
