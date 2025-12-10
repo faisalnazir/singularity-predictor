@@ -716,7 +716,7 @@ function App() {
 
 
 
-      {/* Learn Overlay */}
+      {/* Learn Overlay - Mosaic Card Grid */}
       <Show when={showLearn()}>
         <div class="learn-overlay">
           <div class="learn-header">
@@ -726,55 +726,45 @@ function App() {
             </div>
             <button class="close-btn" onClick={() => setShowLearn(false)}>×</button>
           </div>
-          <div class="learn-tabs">
+          <div class="learn-mosaic">
             <For each={INFO_TABS}>
               {(tab) => (
-                <button class={`learn-tab ${activeTab() === tab.id ? 'active' : ''}`} onClick={() => setActiveTab(tab.id)}>
-                  {tab.label}
-                </button>
-              )}
-            </For>
-          </div>
-          <div class="learn-content">
-            <For each={INFO_TABS}>
-              {(tab) => (
-                <Show when={activeTab() === tab.id}>
-                  <div class="learn-card">
-                    <h3>{tab.content.title}</h3>
-                    <For each={tab.content.paragraphs}>{(p) => <p>{p}</p>}</For>
-
-                    {/* Regular bullets for non-parameters tabs */}
-                    <Show when={tab.content.bullets}>
-                      <ul><For each={tab.content.bullets}>{(bullet) => <li>{bullet}</li>}</For></ul>
-                    </Show>
-
-                    {/* Custom rendering for parameters with categories */}
-                    <Show when={tab.content.categories}>
-                      <div class="params-grid">
-                        <For each={tab.content.categories}>
-                          {(cat) => (
-                            <div class="param-category" style={{ 'border-color': cat.color }}>
-                              <div class="param-category-header" style={{ color: cat.color }}>
-                                <span class="param-icon">{cat.icon}</span>
-                                <span class="param-cat-name">{cat.name}</span>
-                              </div>
-                              <div class="param-items">
-                                <For each={cat.items}>
-                                  {(item) => (
-                                    <div class="param-item">
-                                      <div class="param-name">{item.name}</div>
-                                      <div class="param-desc">{item.desc}</div>
-                                    </div>
-                                  )}
-                                </For>
-                              </div>
-                            </div>
-                          )}
-                        </For>
-                      </div>
-                    </Show>
+                <div class={`mosaic-card ${tab.id}`}>
+                  <div class="mosaic-card-header">
+                    <span class="mosaic-card-label">{tab.label}</span>
                   </div>
-                </Show>
+                  <h3 class="mosaic-card-title">{tab.content.title}</h3>
+                  <For each={tab.content.paragraphs}>{(p) => <p class="mosaic-card-desc">{p}</p>}</For>
+
+                  {/* Regular bullets */}
+                  <Show when={tab.content.bullets}>
+                    <ul class="mosaic-bullets">
+                      <For each={tab.content.bullets}>{(bullet) => <li>{bullet}</li>}</For>
+                    </ul>
+                  </Show>
+
+                  {/* Parameters categories */}
+                  <Show when={tab.content.categories}>
+                    <div class="mosaic-params">
+                      <For each={tab.content.categories}>
+                        {(cat) => (
+                          <div class="mosaic-param-group" style={{ 'border-left-color': cat.color }}>
+                            <div class="mosaic-param-header" style={{ color: cat.color }}>
+                              <span>{cat.icon}</span> {cat.name}
+                            </div>
+                            <For each={cat.items}>
+                              {(item) => (
+                                <div class="mosaic-param-item">
+                                  <strong>{item.name}</strong>: {item.desc}
+                                </div>
+                              )}
+                            </For>
+                          </div>
+                        )}
+                      </For>
+                    </div>
+                  </Show>
+                </div>
               )}
             </For>
           </div>
