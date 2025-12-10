@@ -2380,20 +2380,22 @@ body {
     font-size: 0.65rem;
   }
 
-  /* Graph positioning */
-  .graph-fullscreen {
-    top: 130px;
-    bottom: 180px;
+  /* Two-column layout - narrower params column on tablet */
+  .main-two-column {
+    top: 120px;
+    grid-template-columns: 1fr 280px;
   }
 
-  /* Lever panel scaling */
-  .lever-panel {
+  .params-column {
+    font-size: 0.9em;
+  }
+
+  .params-title {
+    font-size: 0.9rem;
+  }
+
+  .param-category-card {
     padding: var(--space-2);
-  }
-
-  .lever-categories-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-2);
   }
 
   .category-icon {
@@ -2414,6 +2416,11 @@ body {
 
   .lever-slider {
     height: 4px;
+  }
+
+  /* Hide old lever panel */
+  .lever-panel {
+    display: none;
   }
 
   .reset-btn {
@@ -2553,28 +2560,44 @@ body {
     font-size: 0.65rem;
   }
 
-  /* Graph - properly sized for mobile */
-  .graph-fullscreen {
-    top: 180px;
-    bottom: 220px;
-    /* Room for scenarios bar (50px) + lever panel (150px) + gap */
+  /* Two-column layout - stack vertically on mobile */
+  .main-two-column {
+    top: 170px;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
   }
 
-  /* Lever panel - compact, doesn't overlap scenarios */
-  .lever-panel {
-    padding: var(--space-2);
-    max-height: 150px;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    z-index: 50;
+  .graph-column {
+    min-height: 200px;
   }
 
-  .lever-categories-grid {
+  /* Parameters panel at bottom on mobile */
+  .params-column {
+    max-height: 180px;
+    border-left: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .params-panel {
+    padding: var(--space-3);
+  }
+
+  .params-panel-header {
+    margin-bottom: var(--space-2);
+    padding-bottom: var(--space-2);
+  }
+
+  .params-title {
+    font-size: 0.85rem;
+  }
+
+  .params-categories {
+    display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-2);
   }
 
-  .lever-category {
+  .param-category-card {
     padding: var(--space-2);
   }
 
@@ -2584,7 +2607,7 @@ body {
   }
 
   .category-label {
-    font-size: 0.6rem;
+    font-size: 0.55rem;
   }
 
   .lever {
@@ -2600,13 +2623,13 @@ body {
   }
 
   .lever-label {
-    font-size: 0.6rem;
+    font-size: 0.55rem;
   }
 
   .lever-value {
-    font-size: 0.55rem;
+    font-size: 0.5rem;
     padding: 1px 3px;
-    min-width: 18px;
+    min-width: 16px;
   }
 
   /* Better touch targets for sliders */
@@ -2769,16 +2792,68 @@ body {
     font-size: 0.5rem;
   }
 
-  /* Compact graph area */
-  .graph-fullscreen {
-    top: 145px;
-    bottom: 180px;
+  /* Two-column layout - ultra compact on small mobile */
+  .main-two-column {
+    top: 150px;
+  }
+
+  .graph-column {
+    min-height: 150px;
+  }
+
+  .params-column {
+    max-height: 160px;
+  }
+
+  .params-panel {
+    padding: var(--space-2);
+  }
+
+  .params-panel-header {
+    margin-bottom: var(--space-1);
+    padding-bottom: var(--space-1);
+  }
+
+  .params-title {
+    font-size: 0.75rem;
+  }
+
+  .reset-btn-small {
+    font-size: 0.6rem;
+    padding: 2px 6px;
+  }
+
+  .param-category-card {
+    padding: var(--space-1);
+  }
+
+  .category-icon {
+    font-size: 0.6rem;
+  }
+
+  .category-label {
+    font-size: 0.5rem;
+  }
+
+  .lever {
+    padding: 2px;
+    margin-bottom: 2px;
+  }
+
+  .lever-label {
+    font-size: 0.5rem;
+  }
+
+  .lever-value {
+    font-size: 0.45rem;
+    min-width: 14px;
   }
 
   /* Smaller scenarios bar */
   .scenarios-panel {
     height: 45px;
-    bottom: 125px;
+    bottom: auto;
+    top: 115px;
     padding: var(--space-1) var(--space-2);
   }
 
