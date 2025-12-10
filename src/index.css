@@ -1985,237 +1985,121 @@ body {
   justify-content: space-between;
   padding: var(--space-4) var(--space-6);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  flex-shrink: 0;
 }
 
-/* Two Column Layout */
-.learn-two-column {
-  flex: 1;
-  overflow-y: auto;
-  padding: var(--space-6);
-  display: grid;
-  grid-template-columns: 1fr 400px;
-  gap: var(--space-6);
+.learn-tabs {
+  display: flex;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  background: rgba(0, 0, 0, 0.3);
 }
 
-/* Left Column - Concept Cards */
-.learn-main-column {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: var(--space-4);
-  align-content: start;
-}
-
-/* Right Column - Parameters Sidebar */
-.learn-params-column {
-  position: sticky;
-  top: 0;
-  height: fit-content;
-  max-height: calc(100vh - 180px);
-  overflow-y: auto;
-}
-
-.params-sidebar {
-  background: rgba(255, 255, 255, 0.03);
+.learn-tab {
+  padding: var(--space-2) var(--space-4);
+  background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-left: 3px solid #06b6d4;
-  border-radius: var(--radius-xl);
-  padding: var(--space-6);
-}
-
-.params-sidebar-header {
-  margin-bottom: var(--space-3);
-}
-
-.params-sidebar-title {
-  font-size: 1.1rem;
-  font-weight: 700;
-  margin-bottom: var(--space-3);
-  color: var(--color-text-primary);
-}
-
-.params-sidebar-desc {
-  font-size: 0.85rem;
+  border-radius: var(--radius-lg);
   color: var(--color-text-secondary);
-  line-height: 1.6;
-  margin-bottom: var(--space-4);
+  font-family: var(--font-family);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
-.params-sidebar-grid {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
+.learn-tab.active {
+  background: var(--gradient-primary);
+  border-color: transparent;
+  color: var(--color-bg-primary);
 }
 
-/* Legacy mosaic styles kept */
-.learn-mosaic {
+.learn-content {
   flex: 1;
   overflow-y: auto;
-  padding: var(--space-6);
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: var(--space-4);
-  align-content: start;
-}
-
-.mosaic-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: var(--radius-xl);
-  padding: var(--space-6) var(--space-8);
-  transition: all 0.3s ease;
+  padding: var(--space-8);
   display: flex;
-  flex-direction: column;
+  justify-content: center;
 }
 
-.mosaic-card:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.15);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+.learn-card {
+  max-width: 700px;
+  padding: var(--space-8);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-xl);
 }
 
-/* Color-coded card borders by topic */
-.mosaic-card.concepts {
-  border-left: 3px solid var(--color-primary);
+.learn-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: var(--space-6);
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.mosaic-card.agi {
-  border-left: 3px solid #22c55e;
-}
-
-.mosaic-card.asi {
-  border-left: 3px solid var(--color-secondary);
-}
-
-.mosaic-card.singularity {
-  border-left: 3px solid var(--color-tertiary);
-}
-
-.mosaic-card.sequence {
-  border-left: 3px solid #f97316;
-}
-
-.mosaic-card.timelines {
-  border-left: 3px solid #eab308;
-}
-
-.mosaic-card.parameters {
-  border-left: 3px solid #06b6d4;
-  grid-column: span 2;
-}
-
-.mosaic-card-header {
-  margin-bottom: var(--space-3);
-}
-
-.mosaic-card-label {
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--color-text-muted);
-  background: rgba(255, 255, 255, 0.05);
-  padding: 4px 12px;
-  border-radius: var(--radius-full);
-  display: inline-block;
-}
-
-.mosaic-card-title {
-  font-size: 1.2rem;
-  font-weight: 700;
-  margin-bottom: var(--space-4);
-  color: var(--color-text-primary);
-  line-height: 1.4;
-}
-
-.mosaic-card-desc {
-  font-size: 0.9rem;
+.learn-card p {
+  font-size: 1rem;
   color: var(--color-text-secondary);
   line-height: 1.7;
-  margin-bottom: var(--space-4);
-  text-align: justify;
-  text-justify: inter-word;
+  margin-bottom: var(--space-6);
 }
 
-.mosaic-bullets {
+.learn-card ul {
   list-style: none;
-  padding: 0;
-  margin: var(--space-2) 0 0 0;
 }
 
-.mosaic-bullets li {
+.learn-card li {
   position: relative;
   padding-left: var(--space-6);
   margin-bottom: var(--space-3);
   color: var(--color-text-secondary);
-  font-size: 0.85rem;
-  line-height: 1.6;
-  text-align: left;
+  font-size: 0.95rem;
 }
 
-.mosaic-bullets li::before {
+.learn-card li::before {
   content: '';
   position: absolute;
   left: 0;
   top: 8px;
-  width: 6px;
-  height: 6px;
-  background: var(--color-primary);
+  width: 8px;
+  height: 8px;
+  background: var(--gradient-primary);
   border-radius: 50%;
-  opacity: 0.8;
 }
 
-/* Parameters inside mosaic card */
-.mosaic-params {
+/* Parameters Grid Layout */
+.params-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: var(--space-4);
-  margin-top: var(--space-2);
+  margin-top: var(--space-4);
 }
 
-.mosaic-param-group {
-  background: rgba(0, 0, 0, 0.25);
-  border-left: 3px solid;
-  border-radius: var(--radius-md);
+.param-category {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-left-width: 3px;
+  border-radius: var(--radius-lg);
   padding: var(--space-4);
 }
 
-.mosaic-param-header {
-  font-size: 0.85rem;
-  font-weight: 700;
-  margin-bottom: var(--space-3);
+.param-category-header {
   display: flex;
   align-items: center;
   gap: var(--space-2);
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.mosaic-param-item {
-  font-size: 0.75rem;
-  color: var(--color-text-secondary);
-  margin-bottom: var(--space-1);
-  line-height: 1.4;
+.param-icon {
+  font-size: 1.3rem;
 }
 
-.mosaic-param-item strong {
-  color: var(--color-text-primary);
-}
-
-/* Legacy styles kept for compatibility */
-.learn-tabs {
-  display: none;
-}
-
-.learn-tab {
-  display: none;
-}
-
-.learn-content {
-  display: none;
-}
-
-.learn-card {
-  display: none;
+.param-cat-name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .param-items {
