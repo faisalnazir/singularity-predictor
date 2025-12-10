@@ -156,8 +156,8 @@ export function generateChartData(agiYear, superYear, asiYear) {
 /**
  * Generate milestone markers for the graph
  * @param {number} agiYear - AGI arrival year
- * @param {number} superYear - Superintelligence arrival year
- * @param {number} asiYear - ASI arrival year
+ * @param {number} superYear - Superintelligence/ASI arrival year (kept for compatibility)
+ * @param {number} asiYear - ASI arrival year (ASI and Superintelligence are equivalent)
  * @returns {Array} Array of milestone objects
  */
 export function generateMilestones(agiYear, superYear, asiYear) {
@@ -168,10 +168,10 @@ export function generateMilestones(agiYear, superYear, asiYear) {
     return [];
   }
 
+  // ASI and Superintelligence are treated as equivalent - show single combined milestone
   return [
     { year: agiYear, level: 0.45, label: 'AGI', color: '#00f0ff' },
-    { year: superYear, level: 0.65, label: 'Superintelligence', color: '#8b5cf6' },
-    { year: asiYear, level: 0.85, label: 'ASI', color: '#ec4899' },
+    { year: asiYear, level: 0.85, label: 'ASI/Superintelligence', color: '#ec4899' },
   ];
 }
 

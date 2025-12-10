@@ -634,12 +634,7 @@ function App() {
           <span class="pred-time">({getTimeRemaining(timeline().agiYear)})</span>
         </div>
         <div class="pred-item">
-          <span class="pred-name">Superintelligence</span>
-          <span class="pred-year super">{Math.round(timeline().superYear)}</span>
-          <span class="pred-time">({getTimeRemaining(timeline().superYear)})</span>
-        </div>
-        <div class="pred-item">
-          <span class="pred-name">ASI</span>
+          <span class="pred-name">ASI/Superintelligence</span>
           <span class="pred-year asi">{Math.round(timeline().asiYear)}</span>
           <span class="pred-time">({getTimeRemaining(timeline().asiYear)})</span>
         </div>
