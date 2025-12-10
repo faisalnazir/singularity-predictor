@@ -15,13 +15,25 @@ export default function ShareButton(props) {
 
   /**
    * Generate share text based on current predictions
+   * ASI and Superintelligence are treated as equivalent
    */
   const generateShareText = () => {
-    const { agiYear, superYear, asiYear } = props.timeline;
+    const { agiYear, asiYear } = props.timeline;
     const singularityYear = Math.round(asiYear + 3);
     const scenario = props.scenario;
 
-    return `My AI Timeline Prediction:\n\n🤖 AGI: ${Math.round(agiYear)}\n🚀 Superintelligence: ${Math.round(superYear)}\n⭐ ASI: ${Math.round(asiYear)}\n🌀 Singularity: ${Math.round(singularityYear)}\n\nScenario: ${scenario}\n\nPredict your own timeline: ${typeof window !== 'undefined' ? window.location.href : ''}\n\n#AI #Singularity #ArtificialIntelligence #Future #AGI #ASI\n\nCC: ${SOCIAL_HANDLES.twitter}`;
+    return `My AI Timeline Prediction:\n\n🤖 AGI: ${Math.round(agiYear)}\n⭐ ASI/Superintelligence: ${Math.round(asiYear)}\n🌀 Singularity: ${Math.round(singularityYear)}\n\nScenario: ${scenario}\n\nPredict your own timeline: ${typeof window !== 'undefined' ? window.location.href : ''}\n\n#AI #Singularity #ArtificialIntelligence #Future #AGI #ASI\n\nCC: ${SOCIAL_HANDLES.twitter}`;
+  };
+
+  /**
+   * Generate LinkedIn-specific share text (shorter, more professional)
+   */
+  const generateLinkedInText = () => {
+    const { agiYear, asiYear } = props.timeline;
+    const singularityYear = Math.round(asiYear + 3);
+    const scenario = props.scenario;
+
+    return `My AI Timeline Prediction:\n\n🤖 AGI: ${Math.round(agiYear)}\n⭐ ASI/Superintelligence: ${Math.round(asiYear)}\n🌀 Singularity: ${Math.round(singularityYear)}\n\nScenario: ${scenario}\n\nPredict your own timeline 👇\n\n#AI #AGI #ASI #ArtificialIntelligence #Future`;
   };
 
   /**
@@ -35,15 +47,25 @@ export default function ShareButton(props) {
   };
 
   /**
-   * Share to LinkedIn
+   * Share to LinkedIn - copies text to clipboard and opens LinkedIn share
    */
-  const shareToLinkedIn = () => {
+  const shareToLinkedIn = async () => {
     const shareUrl = window.location.href;
+    const shareText = generateLinkedInText();
 
-    // Always use direct LinkedIn share URL to avoid Apple share sheet
-    // This ensures LinkedIn opens in a new window
+    // Copy the share text to clipboard first
+    try {
+      await navigator.clipboard.writeText(shareText);
+    } catch (err) {
+      console.error('Failed to copy text:', err);
+    }
+
+    // Open LinkedIn share dialog
     const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`;
-    window.open(url, '_blank', 'width=600,height=400');
+    window.open(url, '_blank', 'width=600,height=600');
+
+    // Show a brief alert to let user know text is copied
+    alert('Your prediction text has been copied! Paste it into your LinkedIn post.');
     setShowMenu(false);
   };
 
